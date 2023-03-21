@@ -1,28 +1,23 @@
 import spacy
 
-# Load the small English model
+# Load the English language model
 nlp = spacy.load("en_core_web_sm")
 
-# Define the garden path sentences
-gardenpathSentences = [
-    "The old man the boat.",
-    "The horse raced past the barn fell.",
-    "The chicken is ready to eat.",
-    "The lettuce was too hot to eat.",
-    "The dog that I had really loved bones."
-]
+# Define a list of garden path sentences
+gardenpathSentences = ["John Smith lives in New York.",
+                       "The cat chased the mouse.",
+                       "The Eiffel Tower is in Paris.",
+                       "Albert Einstein was a brilliant physicist.",
+                       "The government plans to raise taxes were met with resistance."]
 
-# Loop through each sentence and tokenize it
+# Loop through each sentence in the list
 for sentence in gardenpathSentences:
+    # Parse the sentence using the loaded language model
     doc = nlp(sentence)
-
-    # Loop through each token in the sentence and print its text and entity label
-    for token in doc:
-        print(token.text, token.ent_type_)
-
-        # If the entity label is not recognized, look it up using spacy.explain
-        if token.ent_type_ == "":
-            print(spacy.explain(token.ent_type_))
-
-    # Print a blank line to separate each sentence
-    print()
+    # Print the original sentence
+    print("\nSentence: ", sentence)
+    # Print the entities found in the sentence
+    print("Entities: ")
+    for ent in doc.ents:
+        # Print the text of the entity and the entity label
+        print(ent.text, ent.label_)
